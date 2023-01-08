@@ -7,6 +7,7 @@
 # Load SuperStoresOrder.csv in R 
 # Set the working directory
 setwd("/Users/farahafifah/R Programming/Assignment 2")
+setwd("/Users/farahafifah/R Programming/Assignment 2 CPC351")
 
 # Read a CSV files using read.csv() function
 order <- read.csv("SuperStoreOrders.csv",header=T,sep=",")
