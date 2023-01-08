@@ -236,7 +236,7 @@ barplot(mostCustomer$amount, names.arg=mostCustomer$country,
 # relationship that can be deduce from the data. 
 # Explain your answer with appropriate visuals.
 
-# 1. Ship Mode
+# 1. The Frequency of Ship Mode Used
 # Library dplyr
 library(dplyr)
 
@@ -281,28 +281,7 @@ barplot(totalSales$total, names.arg=totalSales$category,
 )
 
 
-# 3. Total Shipping Cost According to Ship Mode
-
-# Library dplyr
-library(dplyr)
-
-# Create a new data      
-shippingCost = order_new_extracted %>% group_by(ship_mode) %>%
-  summarise(totalCost = sum(shipping_cost),
-            .groups = 'drop')
-
-# Sort descending by amount
-shippingCost <- shippingCost[order(-shippingCost$totalCost),]
-
-# Bar Chart
-barplot(shippingCost$totalCost, names.arg=shippingCost$ship_mode,
-        xlab="Category",
-        ylab="Amount",
-        main="Total Shipping Cost According to Ship Modes",
-        col=viridis(length(shippingCost$totalCost))
-)
-
-# 4. Top 5 Customer with The Most Shipping Cost Paid
+# 3. Top 5 Customer with The Most Shipping Cost Paid
 
 # Library dplyr
 library(dplyr)
@@ -326,7 +305,7 @@ barplot(mostPaidShipping$countCustomer, names.arg=mostPaidShipping$customer_name
         col=magma(length(mostPaidShipping$countCustomer))
 )
 
-# 5. Profit Gain According to Market List
+# 4. Profit Gain According to Market List
 
 # Library dplyr
 library(dplyr)
