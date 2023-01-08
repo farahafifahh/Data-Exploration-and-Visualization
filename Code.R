@@ -103,6 +103,87 @@ boxplot(Writing~STU_Ethnic,
         col="pink",
         border="red")
 
+# Question 4 ====
+# Does parental level of education affect students’ average performance?
+
+# Display relationship between Maths score of students and parental level of education
+ggplot(data = studentperf, aes(x = PAR_Education, y = Maths, fill = PAR_Education)) +
+  geom_boxplot() + labs(x = "Parental Level of Education", y = "Maths Score of Students", title = "Parental Level of Education vs Students' Maths Score") 
+
+# Display relationship between Reading score of students and parental level of education
+ggplot(data = studentperf, aes(x = PAR_Education, y = Reading,fill = PAR_Education)) +
+  geom_boxplot() + labs(x = "Parental Level of Education", y = "Reading Score of Students", title = "Parental Level of Education vs Students' Reading Score")
+
+# Display relationship between Writing score of students and parental level of education
+ggplot(data = studentperf, aes(x= PAR_Education, y = Writing, fill = PAR_Education)) +
+  geom_boxplot() + labs(x = "Parental Level of Education", y = "Writing Score of Students", title = "Parental Level of Education vs Students' Writing Score")
+
+# Question 5 ====
+# Does parental level of education affect students’ performance in specific context (based on ethnicity)
+
+# Display relationship between Maths score of students and parental level of education based on ethnicity
+ggplot(data = studentperf, aes(x = PAR_Education, y = Maths, fill = STU_Ethnic)) +
+  geom_boxplot() + labs(x = "Parental Level of Education", y = "Maths Score", title ="Parental Level of Education and Ethnicity vs Students' Maths Performance ")
+
+# Display relationship between Reading score of students and parental level of education based on ethnicity
+ggplot(data = studentperf, aes(x = PAR_Education, y = Reading, fill = STU_Ethnic)) +
+  geom_boxplot() + labs(x = "Parental Level of Education", y = "Reading Score", title ="Parental Level of Education and Ethnicity vs Students' Reading Performance ")
+
+# Display relationship between Writing score of students and parental level of education based on ethnicity
+ggplot(data = studentperf, aes(x = PAR_Education, y = Writing, fill = STU_Ethnic)) +
+  geom_boxplot() + labs(x = "Parental Level of Education", y = "Writing Score", title ="Parental Level of Education and Ethnicity vs Students' Writing Performance ")
+
+# Question 6 ====
+# How do students course preparation status affect their performance? 
+
+# Calculate total score of all three tests
+studentperf$total_score <- studentperf$Maths + studentperf$Reading + studentperf$Writing
+
+# Calculate the mean performance scores for each preparation course status
+mean_scores <- studentperf %>%
+  group_by(PREP_CourseStatus) %>%
+  summarize(MathMean = mean(Maths), ReadingMean = mean(Reading), WritingMean = mean(Writing))
+
+# Display relationship between course preparation status and Maths score
+ggplot(data = mean_scores, aes(x = PREP_CourseStatus, y = MathMean, fill = PREP_CourseStatus)) +
+  geom_col() + labs(x = "Preparation of Course Status",y = "Math Score",title = "Effect of Preparation Course Status on Maths Performance")
+
+# Display relationship between course preparation status and Reading score
+ggplot(data = mean_scores, aes(x = PREP_CourseStatus, y = ReadingMean, fill = PREP_CourseStatus)) +
+  geom_col() + labs(x = "Preparation of Course Status",y = "Reading Score",title = "Effect of Preparation Course Status on Reading Performance")
+
+# Display relationship between course preparation status and Writing score
+ggplot(data = mean_scores, aes(x = PREP_CourseStatus, y = WritingMean, fill = PREP_CourseStatus)) +
+  geom_col() + labs(x = "Preparation of Course Status",y = "Writing Score",title = "Effect of Preparation Course Status on Writing Performance")
+
+# Question 7 ====
+# Two more trends / patterns / relationship that can be deduce from the data
+
+# Trend 1- Does students' gender affect performance?
+# Relationship between students' gender and Maths Score
+ggplot(data = studentperf, aes(x = STU_Gender, y = Maths, fill = STU_Gender)) +
+  geom_boxplot() + labs(x = "Gender", y = "Maths Marks")
+
+# Relationship between students' gender and Reading Score
+ggplot(data = studentperf, aes(x = STU_Gender, y = Reading, fill = STU_Gender)) +
+  geom_boxplot() + labs(x = "Gender", y = "Reading Marks")
+
+# Relationship between students' gender and Writing Score
+ggplot(data = studentperf, aes(x = STU_Gender, y = Writing, fill = STU_Gender)) +
+  geom_boxplot() + labs(x = "Gender", y = "Writing Marks")
+
+# Trend 2- Student gender vs gender course preparation status
+# Relationship between course preparation status and gender
+ggplot(studentperf, aes(x = PREP_CourseStatus, y = STU_Gender, fill = STU_Gender)) +
+  geom_bar(stat = "identity") + theme(axis.text.y = element_blank())+
+  labs(x = "Status of Course Preparation", y = "Student Gender", title = "Relationship between Student Gender vs Course Preparation Status")
+
+# Trend 3- Student Ethnicity and Student Gender
+# Relationship between ethnicity of student and gender of student
+ggplot(studentperf, aes(x = STU_Ethnic, y = STU_Gender, fill = STU_Gender)) +
+  geom_bar(stat = "identity") + theme(axis.text.y = element_blank())+
+  labs(x = "Student ethnicity", y = "Student Gender", title = "Relationship between Student Ethnicity vs Student Gender")
+
 # Question 8 =====
 # (a) State the data type of each variable. 
 #     Some of the variables are not defined with correct data type. 
