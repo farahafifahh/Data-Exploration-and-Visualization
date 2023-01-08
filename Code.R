@@ -1,3 +1,108 @@
+# Question 1 ====
+# library(ggplot2)
+
+# Set the working directory
+setwd("/Users/farahafifah/R Programming/Assignment 2 CPC351")
+
+# Read a CSV files using read.csv() function
+studentperf <- read.csv("StudentsPerformance.csv")
+
+# Print the summary of the imported data
+summary(studentperf)
+
+# a. Convert variables to suitable data type.
+studentperf$gender <- as.factor(studentperf$gender)
+studentperf$race.ethnicity <- as.factor(studentperf$race.ethnicity)
+studentperf$parental.level.of.education <- as.factor(studentperf$parental.level.of.education)
+studentperf$lunch <- as.factor(studentperf$lunch)
+studentperf$test.preparation.course <- as.factor(studentperf$test.preparation.course)
+
+# b. Identify the number of missing values in data
+sum(is.na(studentperf))
+
+# c. Remove variable 'lunch' from the data
+drop <- c("lunch")
+studentperf <- studentperf[,!(names(studentperf) %in% drop)]
+
+# d. Rename the variables name
+colnames(studentperf) <- c("STU_Gender", "STU_Ethnic", "PAR_Education", 
+                           "PREP_CourseStatus", "Maths", "Reading", "Writing")
+
+# Print the summary of the pre-processed data
+summary(studentperf)
+
+# Question 2 ====
+# Pie chart of distribution of students according to ethnicity
+table1 <- table(studentperf$STU_Ethnic)
+freq <- paste(names(table1), "\n", table1, "\n/", round(100*table1/sum(table1),1), "%", ep="")
+pie(table1, labels = freq,
+    main="Distribution of Students According to Ethnicity")
+
+# Bar chart of distribution of gender in each ethnic
+ggplot(studentperf, aes(fill=STU_Gender, y=STU_Gender, x=STU_Ethnic)) + 
+  geom_bar(position="stack", stat="identity") +
+  theme(axis.text.y = element_blank()) +
+  guides(fill = guide_legend(title = "Gender")) +
+  ggtitle("Distribution of Gender in Each Ethnicity") +
+  xlab("Ethnicity") +
+  ylab("Gender")
+
+# Bar chart of parental level education and course status
+ggplot(studentperf, aes(fill=PAR_Education, y=PAR_Education, x=PREP_CourseStatus)) + 
+  geom_bar(position="stack", stat="identity") +
+  theme(axis.text.y = element_blank()) +
+  guides(fill = guide_legend(title = "Parental Level \n of Education")) +
+  ggtitle("Preparation Course Status and Parental Level of Education") +
+  xlab("Preparation Course Status") +
+  ylab("Parental Level of Education")
+
+# Question 3 ====
+# Distribution of marks for maths
+histMath <- hist(studentperf$Maths, main="Distribution of Marks for Maths",
+                 xlab="Marks", col="plum", border="purple")
+text(histMath$mids,histMath$counts,labels=histMath$counts, adj=c(0.5, -0.5))
+
+# Distribution of marks for reading
+histReading <- hist(studentperf$Reading, main="Distribution of Marks for Reading",
+                    xlab="Marks", col="lightblue", border="blue")
+text(histReading$mids,histReading$counts,labels=histReading$counts, adj=c(0.5, -0.5))
+
+# Distribution of marks for writing
+histWriting <- hist(studentperf$Writing, main="Distribution of Marks for Writing",
+                    xlab="Marks", col="pink", border="red")
+text(histWriting$mids,histWriting$counts,labels=histWriting$counts, adj=c(0.5, -0.5))
+
+# Performance of students from different ethnicity in each courses
+# Box plot of performance of students in maths
+ethnic_maths <- studentperf[order(studentperf$Maths),]
+boxplot(Maths~STU_Ethnic,
+        data=ethnic_maths,
+        main="Performance of Students in Maths from Each Ethnicity",
+        xlab="Ethnicity",
+        ylab="Marks",
+        col="plum",
+        border="purple")
+
+# Box plot of performance of students in reading
+ethnic_reading <- studentperf[order(studentperf$Reading),]
+boxplot(Reading~STU_Ethnic,
+        data=ethnic_reading,
+        main="Performance of Students in Reading from Each Ethnicity",
+        xlab="Ethnicity",
+        ylab="Marks",
+        col="lightblue",
+        border="blue")
+
+# Box plot of performance of students in writing
+ethnic_writing <- studentperf[order(studentperf$Writing),]
+boxplot(Writing~STU_Ethnic,
+        data=ethnic_writing,
+        main="Performance of Students in Writing from Each Ethnicity",
+        xlab="Ethnicity",
+        ylab="Marks",
+        col="pink",
+        border="red")
+
 # Question 8 =====
 # (a) State the data type of each variable. 
 #     Some of the variables are not defined with correct data type. 
@@ -6,7 +111,6 @@
 
 # Load SuperStoresOrder.csv in R 
 # Set the working directory
-setwd("/Users/farahafifah/R Programming/Assignment 2")
 setwd("/Users/farahafifah/R Programming/Assignment 2 CPC351")
 
 # Read a CSV files using read.csv() function
