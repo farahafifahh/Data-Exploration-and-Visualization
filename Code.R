@@ -71,6 +71,9 @@ summary(order_new_extracted)
 # Library ggplot2 to plot the graph
 library("ggplot2")
 
+# Library dplyr
+library(dplyr)
+
 # Create a new data      
 segmentConsumer = order_new_extracted %>% group_by(country) %>%
   summarise(amount = length(country),
